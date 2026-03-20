@@ -1,0 +1,10 @@
+[project]
+name = "first-example"
+version = "0.1.0"
+description = "Example python project"
+authors = [
+    {name = "Alex Demchenko"}
+]
+requires-python = ">=3.10"
+
+dependencies = []
