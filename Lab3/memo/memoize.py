@@ -1,17 +1,19 @@
-def memoize(func, max_size=None):
-    cache = {}
+def memoize(max_size=None):
+    def decorator(func):
+        cache = {}
 
-    def wrapper(*args):
-        if args in cache:
-            return cache[args]
+        def wrapper(*args):
+            if args in cache:
+                return cache[args]
 
-        result = func(*args)
+            result = func(*args)
 
-        if max_size and len(cache) >= max_size:
-            first_key = list(cache.keys())[0]
-            cache.pop(first_key)
+            if max_size and len(cache) >= max_size:
+                first_key = list(cache.keys())[0]
+                cache.pop(first_key)
 
-        cache[args] = result
-        return result
+            cache[args] = result
+            return result
 
-    return wrapper
+        return wrapper
+    return decorator
