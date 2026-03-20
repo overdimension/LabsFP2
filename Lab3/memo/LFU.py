@@ -2,7 +2,7 @@ from memoize import memoize
 
 @memoize(max_size=2, policy="LFU")
 def square(x):
-    print("Calculating...")
+    print(f"Calculating square of {x}...")
     return x * x
 
 print(square(1))  # freq: 1 -> 1
