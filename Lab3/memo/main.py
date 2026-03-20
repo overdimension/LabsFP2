@@ -1,9 +1,11 @@
 from memoize import memoize
 
-@memoize
-def add(a, b):
-    print("Calculating")
-    return a + b
+@memoize(max_size=2)
+def square(x):
+    print("Calculating...")
+    return x * x
 
-print(add(2, 3))
-print(add(2, 3))
+print(square(1))
+print(square(2))
+print(square(3))
+print(square(1))
