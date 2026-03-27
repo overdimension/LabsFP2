@@ -32,3 +32,21 @@ class PriorityQueue:
 
         target["removed"] = True
         return target["item"]
+
+    def peek(self, mode):
+        
+        active = [x for x in self.data if not x["removed"]]
+        if not active:
+            return None
+
+        if mode == "highest":
+            return max(active, key=lambda x: x["priority"])["item"]
+
+        if mode == "lowest":
+            return min(active, key=lambda x: x["priority"])["item"]
+
+        if mode == "oldest":
+            return min(active, key=lambda x: x["order"])["item"]
+
+        if mode == "newest":
+            return max(active, key=lambda x: x["order"])["item"]
