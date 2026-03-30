@@ -11,7 +11,7 @@ async def async_square(x):
     return x * x
 
 #Test
-def main():
+async def main():
     numbers = [1, 2, 3, 4, 5]
 
     #Callback
@@ -20,4 +20,5 @@ def main():
     #Async
     print("Async result:", await async_map(async_square, numbers))
 
-if __name__ == "__main__":  main()
+if __name__ == "__main__":
+    asyncio.run(main())
