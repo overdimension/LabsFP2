@@ -1,7 +1,17 @@
-from async_map import square
+from async_map import sync_map
 
 #Callback
-numbers = [1, 2, 3, 4, 5]
-squared_numbers = list(map(square, numbers))
-print(squared_numbers)
+def square(x):
+    return x * x
 
+#Async
+
+
+#Test
+def main():
+    numbers = [1, 2, 3, 4, 5]
+
+    #Callback
+    print("Callback result:", sync_map(square, numbers))
+
+if __name__ == "__main__":  main()
