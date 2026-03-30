@@ -1,4 +1,4 @@
-from async_map import sync_map, async_map
+from async_map import sync_map, async_map, async_map_with_abort
 import asyncio
 
 #Callback
@@ -20,5 +20,8 @@ async def main():
     #Async
     print("Async result:", await async_map(async_square, numbers))
 
+    #Abort
+    print("Abort:", await async_map_with_abort(async_square, numbers))
+    
 if __name__ == "__main__":
     asyncio.run(main())
