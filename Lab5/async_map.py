@@ -1,7 +1,6 @@
 import asyncio
 
 #Callback
-def square(x):
-    return x * x
-
+def sync_map(func, iterable):
+    return [func(x) for x in iterable]
 #Async
