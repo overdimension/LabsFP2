@@ -45,3 +45,28 @@ def dequeue(self, mode):
 def _clean(self, struct, pop_func):
     while struct and struct[0][1] not in self.active:
         pop_func()
+
+def peek(self, mode):
+    if not self.active:
+        return None
+
+    if mode == "lowest":
+        self._clean(self.min_h, lambda: heapq.heappop(self.min_h))
+        return self.min_h[0][2]
+
+    elif mode == "highest":
+        self._clean(self.max_h, lambda: heapq.heappop(self.max_h))
+        return self.max_h[0][2]
+
+    elif mode == "oldest":
+        while self.q and self.q[0][0] not in self.active:
+            self.q.popleft()
+        return self.q[0][1]
+
+    elif mode == "newest":
+        while self.q and self.q[-1][0] not in self.active:
+            self.q.pop()
+        return self.q[-1][1]
+
+    else:
+        raise ValueError
