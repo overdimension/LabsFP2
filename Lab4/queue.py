@@ -8,3 +8,10 @@ class PriorityQueue:
         self.q = deque()
         self.active = set()
         self.i = 0
+
+def enqueue(self, item, priority):
+    heapq.heappush(self.min_h, (priority, self.i, item))
+    heapq.heappush(self.max_h, (-priority, self.i, item))
+    self.q.append((self.i, item))
+    self.active.add(self.i)
+    self.i += 1
