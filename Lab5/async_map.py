@@ -1,8 +1,11 @@
 import asyncio
 
 #Callback
-def sync_map(func, iterable):
-    return [func(x) for x in iterable]
+def async_map_callback(iterable, func, callback):
+    result = []
+    for item in iterable:
+        result.append(func(item))
+    callback(result)
 
 #Async
 async def async_map(func, iterable):
