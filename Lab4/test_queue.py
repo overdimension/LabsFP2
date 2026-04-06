@@ -6,20 +6,11 @@ pq.enqueue("A", 5)
 pq.enqueue("B", 1)
 pq.enqueue("C", 10)
 
-print("Stage 1:")
-print(pq.data)
-print()
+print(pq.peek("highest"))  # C
+print(pq.peek("lowest"))   # B
+print(pq.peek("newest"))   # C
+print(pq.peek("oldest"))   # A
 
-
-print("Stage 3:")
-print(pq.peek("highest"))
-print(pq.peek("lowest"))
-print(pq.peek("newest"))
-print(pq.peek("oldest"))
-print()
-
-
-print("Stage 2:")
-print(pq.dequeue("highest"))
-print(pq.dequeue("lowest"))
-print(pq.dequeue("oldest"))
+print(pq.dequeue("highest")) # C
+print(pq.dequeue("lowest"))  # B
+print(pq.dequeue("oldest"))  # A
