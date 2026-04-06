@@ -21,15 +21,19 @@ def dequeue(self, mode):
         return None
 
     if mode == "lowest":
+        self._clean(self.min_h, lambda: heapq.heappop(self.min_h))
         _, i, val = heapq.heappop(self.min_h)
 
     elif mode == "highest":
+        self._clean(self.max_h, lambda: heapq.heappop(self.max_h))
         _, i, val = heapq.heappop(self.max_h)
 
     elif mode == "oldest":
+        self._clean(self.q, lambda: self.q.popleft())
         i, val = self.q.popleft()
 
     elif mode == "newest":
+        self._clean(self.q, lambda: self.q.pop())
         i, val = self.q.pop()
 
     else:
@@ -37,3 +41,7 @@ def dequeue(self, mode):
 
     self.active.remove(i)
     return val
+
+def _clean(self, struct, pop_func):
+    while struct and struct[0][1] not in self.active:
+        pop_func()
