@@ -3,38 +3,38 @@ from collections import deque
 
 class PriorityQueue:
     def __init__(self):
-        self.min_h = []
-        self.max_h = []
-        self.q = deque()
+        self.min_heap = []
+        self.max_heap = []
+        self.deque = deque()
         self.active = set()
-        self.i = 0
+        self.id_counter = 0
 
 def enqueue(self, item, priority):
-    heapq.heappush(self.min_h, (priority, self.i, item))
-    heapq.heappush(self.max_h, (-priority, self.i, item))
-    self.q.append((self.i, item))
-    self.active.add(self.i)
-    self.i += 1
+    heapq.heappush(self.min_heap, (priority, self.id_counter, item))
+    heapq.heappush(self.max_heap, (-priority, self.id_counter, item))
+    self.deque.append((self.id_counter, item))
+    self.active.add(self.id_counter)
+    self.id_counter += 1
 
 def dequeue(self, mode):
     if not self.active:
         return None
 
     if mode == "lowest":
-        self._clean(self.min_h, lambda: heapq.heappop(self.min_h))
-        _, i, val = heapq.heappop(self.min_h)
+        self._clean(self.min_heap, lambda: heapq.heappop(self.min_heap))
+        _, i, val = heapq.heappop(self.min_heap)
 
     elif mode == "highest":
-        self._clean(self.max_h, lambda: heapq.heappop(self.max_h))
-        _, i, val = heapq.heappop(self.max_h)
+        self._clean(self.max_heap, lambda: heapq.heappop(self.max_heap))
+        _, i, val = heapq.heappop(self.max_heap)
 
     elif mode == "oldest":
-        self._clean(self.q, lambda: self.q.popleft())
-        i, val = self.q.popleft()
+        self._clean(self.deque, lambda: self.deque.popleft())
+        i, val = self.deque.popleft()
 
     elif mode == "newest":
-        self._clean(self.q, lambda: self.q.pop())
-        i, val = self.q.pop()
+        self._clean(self.deque, lambda: self.deque.pop())
+        i, val = self.deque.pop()
 
     else:
         raise ValueError
@@ -51,22 +51,22 @@ def peek(self, mode):
         return None
 
     if mode == "lowest":
-        self._clean(self.min_h, lambda: heapq.heappop(self.min_h))
-        return self.min_h[0][2]
+        self._clean(self.min_heap, lambda: heapq.heappop(self.min_heap))
+        return self.min_heap[0][2]
 
     elif mode == "highest":
-        self._clean(self.max_h, lambda: heapq.heappop(self.max_h))
-        return self.max_h[0][2]
+        self._clean(self.max_heap, lambda: heapq.heappop(self.max_heap))
+        return self.max_heap[0][2]
 
     elif mode == "oldest":
-        while self.q and self.q[0][0] not in self.active:
-            self.q.popleft()
-        return self.q[0][1]
+        while self.deque and self.deque[0][0] not in self.active:
+            self.deque.popleft()
+        return self.deque[0][1]
 
     elif mode == "newest":
-        while self.q and self.q[-1][0] not in self.active:
-            self.q.pop()
-        return self.q[-1][1]
+        while self.deque and self.deque[-1][0] not in self.active:
+            self.deque.pop()
+        return self.deque[-1][1]
 
     else:
         raise ValueError
