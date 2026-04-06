@@ -8,8 +8,8 @@ def async_map_callback(iterable, func, callback):
     callback(result)
 
 #Async
-async def async_map(func, iterable):
-    tasks = [func(x) for x in iterable]
+async def async_map(iterable, func):
+    tasks = [asyncio.create_task(func(x)) for x in iterable]
     return await asyncio.gather(*tasks)
 
 #Abort
