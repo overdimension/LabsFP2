@@ -1,22 +1,33 @@
 import asyncio
 
+#Producer
 async def data_producer():  
     try:
-        for i in range(1, 6):
+        for i in range(1, 11):
             await asyncio.sleep(0.5)
-            if i == 3:
-                #Error simulation
+            if i == 7:
                 raise Exception("Read error")
-            yield f"line {i}"
+            yield f"Data chunk {i}"
     except Exception as e:
-        print(f"Error occurred: {e}")
-        raise
+        raise e
+
+async def data_processor_batched(batch_size=3):
+    batch = []
+    
+    async for item in data_producer():
+        batch.append(item)
+        
+        if len(batch) >= batch_size:
+            print(f"Processing batch: {batch}")
+            batch = [] 
+            
+    if batch:
+        print(f"Processing leftovers: {batch}")
 
 #Consumer
 async def main():
     try:
-        async for line in data_producer():
-            print(f"Processed: {line}")
+        await data_processor_batched()
     except Exception as e:
         print(f"Error occurred in main: {e}")
 
