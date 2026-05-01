@@ -14,4 +14,7 @@ class EventEmitter:
             return
 
         for handler in self.handlers[event]:
-            handler(data)
+            try:
+                handler(data)
+            except Exception as e:
+                print(f"Error occurred while handling event '{event}': {e}")
