@@ -1,4 +1,5 @@
 import asyncio
+import inspect
 
 class EventEmitter:
     def __init__(self):
@@ -19,7 +20,7 @@ class EventEmitter:
 
         for handler in self.handlers[event]:
             try:
-                if asyncio.iscoroutinefunction(handler):
+                if inspect.iscoroutinefunction(handler):
                     await handler(data)
                 else:
                     handler(data)
