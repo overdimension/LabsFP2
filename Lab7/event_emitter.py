@@ -1,3 +1,5 @@
+import asyncio
+
 class EventEmitter:
     def __init__(self):
         self.handlers = {}
@@ -9,12 +11,18 @@ class EventEmitter:
 
         return lambda: self.handlers[event].remove(callback)
 
-    def emit(self, event, data):
+    async def emit(self, event, data):
         if event not in self.handlers:
+            if event == "error": 
+                print(f"CRITICAL: Unhandled error event: {data}")
             return
 
         for handler in self.handlers[event]:
             try:
-                handler(data)
+                if asyncio.iscoroutinefunction(handler):
+                    await handler(data)
+                else:
+                    handler(data)
             except Exception as e:
-                print(f"Error occurred while handling event '{event}': {e}")
+                if event != "error":
+                    await self.emit("error", f"Failure in {event}: {e}")
