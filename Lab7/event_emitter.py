@@ -26,3 +26,18 @@ class EventEmitter:
             except Exception as e:
                 if event != "error":
                     await self.emit("error", f"Failure in {event}: {e}")
+    
+#Main
+async def main():
+    ee = EventEmitter()
+    
+    ee.subscribe("error", lambda msg: print(f"System Alert: {msg}"))
+    
+    ee.subscribe("data", lambda d: print(f"Listener 1 got: {d}"))
+    ee.subscribe("data", lambda d: 1/0) #Error 
+    ee.subscribe("data", lambda d: print(f"Listener 3 got: {d}"))
+    
+    print("First Emit")
+    await ee.emit("data", "Hello")
+    
+asyncio.run(main())
