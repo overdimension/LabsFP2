@@ -26,7 +26,10 @@ class EventEmitter:
                     handler(data)
             except Exception as e:
                 if event != "error":
-                    await self.emit("error", f"Failure in {event}: {e}")
+                    try:
+                        await self.emit("error", f"Failure in {event}: {e}")
+                    except Exception as error_e:
+                        print(f"CRITICAL: Error handler failed: {error_e}")
     
 #Main
 async def main():
